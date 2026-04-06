@@ -1,0 +1,34 @@
+{
+    "name": "willgerman.dev",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "author": "Will German",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "test:unit": "vitest",
+        "format": "prettier --write --experimental-cli src/"
+    },
+    "imports": {
+        "#app.css": "./src/styles/app.css"
+    },
+    "dependencies": {
+        "pinia": "^3.0.4",
+        "vue": "^3.5.31",
+        "vue-router": "^5.0.4"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^6.0.5",
+        "@vue/test-utils": "^2.4.6",
+        "jsdom": "^29.0.1",
+        "prettier": "3.8.1",
+        "vite": "^8.0.3",
+        "vite-plugin-vue-devtools": "^8.1.1",
+        "vitest": "^4.1.2"
+    },
+    "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+    }
+}
