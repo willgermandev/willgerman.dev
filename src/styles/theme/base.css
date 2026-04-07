@@ -20,6 +20,14 @@
     }
 }
 
+:where(#app) {
+    @apply min-h-screen flex flex-col;
+
+    & > main {
+        @apply flex-1;
+    }
+}
+
 :where(h1, h2, h3, h4, h5, h6) {
     @apply font-display text-neutral-950;
 

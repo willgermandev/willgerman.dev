@@ -43,7 +43,7 @@
     }
 
     .footer__content {
-        @apply w-full max-w-7xl flex flex-col sm:flex-row justify-between items-center p-2 mx-auto;
+        @apply w-full max-w-7xl flex flex-col sm:flex-row justify-between items-center p-2 md:px-2 md:py-4 mx-auto;
     }
 
     .footer__copyright {

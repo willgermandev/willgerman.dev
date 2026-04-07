@@ -51,7 +51,7 @@
     @reference "#app.css";
 
     .link {
-        @apply inline-block bg-transparent text-neutral-950 p-2 mx-6;
+        @apply bg-transparent text-neutral-950 p-2 mx-6;
 
         @variant hover {
             @apply cursor-pointer;
@@ -66,11 +66,12 @@
         }
     }
 
-    .link--active {
+    /* NOTE: This only works on apps that have more than 1 page */
+    /* .link--active {
         @apply border-b-2 border-b-neutral-950;
 
         @variant dark {
             @apply border-b-neutral-50;
         }
-    }
+    } */
 </style>

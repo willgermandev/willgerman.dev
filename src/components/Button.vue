@@ -4,10 +4,6 @@
             type: String,
             validator: (value) => ["submit", "button", "reset"].includes(value),
         },
-        styles: {
-            type: String,
-            default: "",
-        },
         loading: {
             type: Boolean,
             default: false,
@@ -24,7 +20,6 @@
         :type="props.type"
         :class="[
             'button',
-            props.styles,
             {
                 'button--loading': props.loading,
             },
