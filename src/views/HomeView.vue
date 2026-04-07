@@ -100,10 +100,10 @@
 
     .section#my-work::after {
         content: "";
-        @apply absolute top-0 left-1/2 w-screen h-full -translate-x-1/2 border-y-16 border-neutral-950 pointer-events-none select-none;
+        @apply absolute top-0 left-1/2 w-screen h-full -translate-x-1/2 border-y-16 border-neutral-100 pointer-events-none select-none;
 
         @variant dark {
-            @apply border-neutral-50;
+            @apply border-neutral-900;
         }
     }
 
@@ -119,10 +119,20 @@
 
     .section#lets-chat::before {
         @apply bg-neutral-200;
+        clip-path: polygon(0 0, 100% 0, 100% 15%, 0 85%);
+
+        @variant dark {
+            @apply bg-neutral-700;
+        }
     }
 
     .section#lets-chat::after {
         @apply bg-neutral-300;
+        clip-path: polygon(0 85%, 100% 15%, 100% 100%, 0% 100%);
+
+        @variant dark {
+            @apply bg-neutral-800;
+        }
     }
 
     .section__content {
