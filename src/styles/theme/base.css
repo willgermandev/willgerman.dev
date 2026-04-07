@@ -24,7 +24,7 @@
     @apply min-h-screen flex flex-col;
 
     & > main {
-        @apply flex-1;
+        @apply flex-1 w-full max-w-7xl pt-8 md:px-2 sm:pt-16 mx-auto;
     }
 }
 
@@ -36,10 +36,14 @@
     }
 }
 
-:where(h1) {
-    @apply text-2xl;
+:where(h1, h2) {
+    @apply text-3xl sm:text-5xl lg:text-7xl;
 }
 
-:where(h2) {
-    @apply text-xl;
+:where(p) {
+    @apply text-neutral-950 text-base sm:text-lg lg:text-xl;
+
+    @variant dark {
+        @apply text-neutral-50;
+    }
 }

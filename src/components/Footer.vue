@@ -47,7 +47,7 @@
     }
 
     .footer__copyright {
-        @apply font-bold text-center sm:text-left;
+        @apply font-bold text-neutral-50 text-center sm:text-left;
     }
 
     .footer__list {
