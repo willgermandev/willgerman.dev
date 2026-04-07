@@ -1,0 +1,37 @@
+/*
+    Base.css
+    --------------------
+
+    Defines all base styles across the project. This
+    does not include things like component styles, which
+    are defined in their respective .vue files, but the
+    broader styling for elements such as #app, body, etc.
+
+    Everything here is intentionally set using the :where()
+    selector to give it a specificity of 0, making it easy
+    to override.
+*/
+
+:where(body) {
+    @apply font-sans bg-neutral-50;
+
+    @variant dark {
+        @apply bg-neutral-950;
+    }
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+    @apply font-display text-neutral-950;
+
+    @variant dark {
+        @apply text-neutral-50;
+    }
+}
+
+:where(h1) {
+    @apply text-2xl;
+}
+
+:where(h2) {
+    @apply text-xl;
+}

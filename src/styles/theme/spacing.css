@@ -1,0 +1,36 @@
+/*
+    Spacing.css
+    --------------------
+
+    Define custom theme variables with semantic names.
+
+    These variables are then used by TailwindCSS to
+    generate related utility classes, which can then
+    be used to build components.
+
+    Whenever a theme needs to be updated, we can then
+    edit the theme mappings below to update the entire
+    site versus having to replace utility classes
+    across the entire codebase.
+
+    To update to a new TailwindCSS spacing value, change
+    the property value to be theme("spacing.desired_spacing_value").
+
+    NOTE: Currently this does not function as desired. It is necessary
+    to define the output classes in the utilities layer, that being said it is tedious and ultimately not worth the time investment.
+
+    For the sake of this project, define the spacing scale below and only use these values when styling components.
+*/
+
+@theme {
+    --0: theme("spacing.0"); /* 0px */
+    --xs: theme("spacing.1"); /* 4px */
+    --sm: theme("spacing.2"); /* 8px */
+    --md: theme("spacing.4"); /* 16px */
+    --lg: theme("spacing.8"); /* 32px */
+    --xl: theme("spacing.16"); /* 64px */
+}
+
+@layer utilities {
+    /* TODO: Determine a simple way to output the desired classes */
+}
