@@ -1,16 +1,24 @@
 <script setup>
-    import { ref } from "vue";
-
+    import { ref, onMounted } from "vue";
+    import { useThemeStore } from "@/stores/themeStore";
     import Button from "./Button.vue";
     import Link from "./Link.vue";
 
     const anchors = {
         "Who am I?": "#who-am-i",
         "My Work": "#my-work",
-        "My Ponderings...": "#my-ponderings",
+        // "My Ponderings...": "#my-ponderings", NOTE: Incorporate this section when there is at least one piece of content to read.
     };
 
     const isMenuOpen = ref(false);
+
+    const themeStore = useThemeStore();
+    const theme = ref("light");
+
+    onMounted(() => {
+        themeStore.loadTheme();
+        theme.value = themeStore.getTheme;
+    });
 
     function toggleMenu() {
         isMenuOpen.value = !isMenuOpen.value;
@@ -69,7 +77,14 @@
                 </ul>
             </nav>
             <div class="header__actions">
-                <!-- <button type="button" class="header__toggle">Theme Switcher</button> -->
+                <!-- TODO: Implement Theme Switching -->
+                <!-- <button
+                    type="button"
+                    class="header__toggle"
+                >
+                    <span>☀</span>
+                    <span>🌙</span>
+                </button> -->
                 <Button type="button"> Let's Chat </Button>
             </div>
         </div>
@@ -104,7 +119,7 @@
     }
 
     .header__link {
-        @apply font-display text-base p-2 mx-0;
+        @apply font-bold text-base p-2 mx-0;
     }
 
     .header__button {
@@ -121,5 +136,17 @@
 
     .header__button--close {
         @apply absolute top-0 right-2 md:hidden;
+    }
+
+    .header__actions {
+        @apply flex flex-row gap-8 justify-center items-center;
+    }
+
+    .header__toggle {
+        @apply grid grid-cols-1 gap-0;
+
+        & > * {
+            @apply col-1 row-1;
+        }
     }
 </style>

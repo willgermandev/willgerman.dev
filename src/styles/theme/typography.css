@@ -30,7 +30,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("../../assets/modak/modak-v21-latin-regular.woff2") format("woff2");
+    src: url("../../assets/fonts/modak/modak-v21-latin-regular.woff2") format("woff2");
 }
 
 @font-face {
@@ -38,7 +38,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("../../assets/play/play-v21-latin-regular.woff2") format("woff2");
+    src: url("../../assets/fonts/play/play-v21-latin-regular.woff2") format("woff2");
 }
 
 @font-face {
@@ -46,5 +46,5 @@
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url("../../assets/play/play-v21-latin-700.woff2") format("woff2");
+    src: url("../../assets/fonts/play/play-v21-latin-700.woff2") format("woff2");
 }

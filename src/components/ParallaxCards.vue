@@ -21,7 +21,7 @@
     @reference "#app.css";
 
     .parallax {
-        @apply h-full grid grid-cols-1 gap-0 content-center relative;
+        @apply min-h-96 md:min-h-auto h-full grid grid-cols-1 gap-0 content-center relative;
 
         & > * {
             @apply scale-70;
