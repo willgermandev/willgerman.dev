@@ -21,7 +21,7 @@
 }
 
 :where(#app) {
-    @apply min-h-screen flex flex-col;
+    @apply min-h-screen flex flex-col overflow-x-hidden;
 
     & > main {
         @apply flex-1 w-full max-w-7xl pt-8 md:px-2 sm:pt-16 mx-auto;

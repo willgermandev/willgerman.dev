@@ -22,7 +22,7 @@
         const url = "https://api.web3forms.com/submit";
 
         const payload = {
-            access_key: WEB3FORMS_ACCESS_KEY,
+            access_key: key.value,
             botcheck: botcheck.value,
             name: name.value,
             email: email.value,
@@ -50,8 +50,6 @@
         } else {
             // TODO: Display errors
         }
-
-        console.log(response);
     }
 </script>
 

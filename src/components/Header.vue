@@ -15,10 +15,10 @@
     const themeStore = useThemeStore();
     const theme = ref("light");
 
-    onMounted(() => {
-        themeStore.loadTheme();
-        theme.value = themeStore.getTheme;
-    });
+    // onMounted(() => {
+    //     themeStore.loadTheme();
+    //     theme.value = themeStore.getTheme;
+    // });
 
     function toggleMenu() {
         isMenuOpen.value = !isMenuOpen.value;
