@@ -3,6 +3,7 @@
     import Button from "./Button.vue";
     import Link from "./Link.vue";
     import data from "@/data/history.json";
+    import { describe } from "vitest";
 
     const items = ref(
         data.map((item) => ({
@@ -21,7 +22,9 @@
 
             activeIndex.value = index;
             activeItem.value = items.value[index];
+
             rotateCube(index);
+            shiftGallery(index);
         },
         { deep: true },
     );
@@ -47,10 +50,30 @@
         faces[target].classList.add("active");
 
         cube.value.style.transform = `
-            rotateX(${position[target][0]}deg) 
-            rotateY(${position[target][1]}deg) 
-            rotateZ(${position[target][2]}deg)
-        `;
+                rotateX(${position[target][0]}deg)
+                rotateY(${position[target][1]}deg)
+                rotateZ(${position[target][2]}deg)
+            `;
+    }
+
+    const galleryItem = useTemplateRef("galleryItem");
+
+    function shiftGallery(index) {
+        const item = galleryItem.value;
+        const currentIndex = item.dataset.index;
+
+        item.classList.remove("active");
+        item.classList.remove("reverse");
+        void item.offsetWidth;
+
+        if (index > currentIndex) {
+            item.classList.add("active");
+        }
+
+        if (index < currentIndex) {
+            item.classList.add("active");
+            item.classList.add("reverse");
+        }
     }
 
     onMounted(() => {
@@ -70,36 +93,58 @@
 <template>
     <div class="carousel">
         <div class="content">
-            <h2 class="heading">
-                <span class="text-primary-500">0{{ activeIndex + 1 }}</span>
-                {{ activeItem.title }}
-            </h2>
-            <p class="description">
-                {{ activeItem.description }}
-            </p>
-            <div
-                class="actions"
-                v-if="activeItem.actions"
+            <Transition
+                name="header-scale"
+                mode="out-in"
             >
-                <template
-                    v-for="action in activeItem.actions"
-                    :key="action.text"
+                <h2
+                    class="heading"
+                    :key="activeItem?.id || activeIndex"
                 >
-                    <Button
-                        v-if="action.type === 'button'"
-                        type="button"
+                    <span class="text-primary-500">0{{ activeIndex + 1 }}</span>
+                    {{ activeItem.title }}
+                </h2>
+            </Transition>
+            <Transition
+                name="description-scale"
+                mode="out-in"
+            >
+                <p
+                    class="description"
+                    :key="activeItem?.id || activeIndex"
+                >
+                    {{ activeItem.description }}
+                </p>
+            </Transition>
+            <Transition
+                name="actions-scale"
+                mode="out-in"
+            >
+                <div
+                    class="actions"
+                    v-if="activeItem.actions"
+                    :key="activeItem?.id || activeIndex"
+                >
+                    <template
+                        v-for="action in activeItem.actions"
+                        :key="action.text"
                     >
-                        {{ action.text }}
-                    </Button>
+                        <Button
+                            v-if="action.type === 'button'"
+                            type="button"
+                        >
+                            {{ action.text }}
+                        </Button>
 
-                    <Link
-                        v-else
-                        :to="action.url"
-                    >
-                        {{ action.text }}
-                    </Link>
-                </template>
-            </div>
+                        <Link
+                            v-else
+                            :to="action.url"
+                        >
+                            {{ action.text }}
+                        </Link>
+                    </template>
+                </div>
+            </Transition>
         </div>
         <div class="controls">
             <ul
@@ -120,11 +165,13 @@
             </ul>
         </div>
         <div class="gallery">
-            <div class="gallery__item previous"></div>
-            <div class="gallery__item current">
+            <div
+                class="gallery__item active"
+                ref="galleryItem"
+                :data-index="activeIndex"
+            >
                 {{ activeItem.image }}
             </div>
-            <div class="gallery__item next"></div>
         </div>
     </div>
 </template>
@@ -143,11 +190,36 @@
 
         & > .heading {
             @apply text-balance;
+            transform-origin: left;
         }
 
         & > .description {
             @apply text-balance;
+            transform-origin: left;
         }
+    }
+
+    .header-scale-enter-active,
+    .header-scale-leave-active {
+        transition: all 350ms;
+    }
+
+    .header-scale-enter-from,
+    .header-scale-leave-to {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    .description-scale-enter-active,
+    .description-scale-leave-active {
+        transition: all 350ms;
+        transition-delay: 100ms;
+    }
+
+    .description-scale-enter-from,
+    .description-scale-leave-to {
+        opacity: 0;
+        transform: scale(0);
     }
 
     .controls {
@@ -253,22 +325,26 @@
         }
     }
 
-    .items {
-    }
-
     .actions {
         @apply w-full flex flex-row flex-wrap gap-4 justify-start items-center my-16;
+        transform-origin: left;
+    }
+
+    .actions-scale-enter-active,
+    .actions-scale-leave-active {
+        transition: all 350ms;
+        transition-delay: 200ms;
+    }
+
+    .actions-scale-enter-from,
+    .actions-scale-leave-to {
+        opacity: 0;
+        transform: scale(0);
     }
 
     .gallery {
         @apply w-3/4 aspect-1/1.25 pl-16 relative;
     }
-
-    /* .gallery::after {
-        content: "";
-        @apply absolute top-1/2 left-1/2 w-screen h-screen bg-neutral-100 -translate-x-1/4 -translate-y-1/2 -z-1;
-        clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 0 50%);
-    } */
 
     .gallery__item {
         @apply w-full h-full bg-neutral-950 text-neutral-50 lg:translate-x-16 rounded-lg;
@@ -278,14 +354,41 @@
         }
     }
 
-    .gallery__item.current {
+    @keyframes shift {
+        0% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        40% {
+            opacity: 0;
+        }
+
+        49% {
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+
+        51% {
+            transform: translateY(50%);
+            opacity: 0;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
-    .gallery__item.next {
-        @apply hidden;
+    .gallery__item.active {
+        animation: shift 1s ease;
     }
 
-    .gallery__item.previous {
-        @apply hidden;
+    .gallery__item.active.reverse {
+        animation: shift 1s ease reverse;
     }
 </style>
