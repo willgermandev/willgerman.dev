@@ -2,7 +2,7 @@
     import Button from "@/components/Button.vue";
     import Link from "@/components/Link.vue";
     import ParallaxCards from "@/components/ParallaxCards.vue";
-    import VerticalCarousel from "@/components/VerticalCarousel.vue";
+    import Carousel from "@/components/Carousel.vue";
     import ContactForm from "@/components/ContactForm.vue";
 </script>
 
@@ -31,7 +31,10 @@
             id="my-work"
             class="section"
         >
-            <VerticalCarousel />
+            <Carousel />
+            <div class="bg">
+                <div></div>
+            </div>
         </section>
         <section
             id=""
@@ -82,21 +85,64 @@
     }
 
     .section#my-work {
-        @apply relative;
+        @apply bg-neutral-100 md:grid-cols-1 md:gap-0 relative;
+
+        & > *:not(.bg) {
+            @apply z-1;
+        }
 
         @variant dark {
-            @apply border-neutral-50;
+            @apply bg-neutral-900 border-neutral-50;
+        }
+    }
+
+    .section#my-work::before,
+    .section#my-work::after {
+        content: "";
+        @apply absolute top-0 left-1/2 w-screen h-full -translate-x-1/2;
+    }
+
+    .section#my-work::before {
+        content: "";
+        @apply border-y-16 border-neutral-900 pointer-events-none select-none z-1;
+
+        @variant dark {
+            @apply border-neutral-800;
         }
     }
 
     .section#my-work::after {
-        content: "";
-        @apply absolute top-0 left-1/2 w-screen h-full -translate-x-1/2 border-y-16 border-neutral-100 pointer-events-none select-none;
+        @apply bg-neutral-100 -z-4;
 
         @variant dark {
-            @apply border-neutral-900;
+            @apply bg-neutral-900;
         }
     }
+
+    .section#my-work > .bg {
+        @apply hidden md:block absolute top-0 -left-1/2 w-full h-full z-0 translate-x-[10%];
+        filter: drop-shadow(0 0px 4px rgb(0 0 0 / 0.25));
+
+        @variant dark {
+            filter: drop-shadow(0 0px 4px rgb(255 255 255 / 0.25));
+        }
+
+        & > div {
+            @apply w-full h-full bg-neutral-50 pointer-events-none select-none -z-2;
+            clip-path: polygon(0% 0%, 100% 0, 90% 50%, 100% 100%, 0% 100%);
+
+            @variant dark {
+                @apply bg-neutral-950;
+            }
+        }
+    }
+
+    /* .section#my-work > .bg__wrapper {
+        & > .bg {
+            @apply absolute top-0 left-1/2 w-full h-full pointer-events-none select-none -z-2 bg-neutral-100;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 0 50%);
+        }
+    } */
 
     .section#lets-chat {
         @apply grid-cols-1 md:grid-cols-1 relative;

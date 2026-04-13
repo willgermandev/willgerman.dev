@@ -95,7 +95,7 @@
     @reference "#app.css";
 
     .header {
-        @apply relative overflow-y-scroll md:overflow-y-auto;
+        @apply relative overflow-y-scroll md:overflow-y-auto z-999;
     }
 
     .header__logo {

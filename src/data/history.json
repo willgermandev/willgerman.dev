@@ -1,0 +1,84 @@
+[
+    {
+        "title": "The Beginning",
+        "description": "This is part 1.",
+        "actions": [
+            {
+                "type": "button",
+                "text": "View on Imagination",
+                "url": "url"
+            },
+            {
+                "type": "link",
+                "text": "Learn More",
+                "url": "url"
+            }
+        ],
+        "image": "/assets/images/img1.png"
+    },
+    {
+        "title": "The Middle",
+        "description": "This is part 2.",
+        "actions": [
+            {
+                "type": "link",
+                "text": "View on GitHub",
+                "url": "url"
+            }
+        ],
+        "image": "/assets/images/img2.png"
+    },
+    {
+        "title": "The End",
+        "description": "This is part 3.",
+        "actions": [
+            {
+                "type": "link",
+                "text": "View on GitHub",
+                "url": "url"
+            }
+        ],
+        "image": "/assets/images/img3.png"
+    },
+    {
+        "title": "The Beginning 2",
+        "description": "This is part 1.",
+        "actions": [
+            {
+                "type": "button",
+                "text": "View on Imagination",
+                "url": "url"
+            },
+            {
+                "type": "link",
+                "text": "Learn More",
+                "url": "url"
+            }
+        ],
+        "image": "/assets/images/img4.png"
+    },
+    {
+        "title": "The Middle 2",
+        "description": "This is part 2.",
+        "actions": [
+            {
+                "type": "link",
+                "text": "View on GitHub",
+                "url": "url"
+            }
+        ],
+        "image": "/assets/images/img5.png"
+    },
+    {
+        "title": "The End 2",
+        "description": "This is part 3.",
+        "actions": [
+            {
+                "type": "link",
+                "text": "View on GitHub",
+                "url": "url"
+            }
+        ],
+        "image": "/assets/images/img6.png"
+    }
+]
