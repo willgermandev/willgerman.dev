@@ -1,6 +1,5 @@
 <script setup>
-    import { ref, onMounted } from "vue";
-    import { useThemeStore } from "@/stores/themeStore";
+    import { ref } from "vue";
     import Button from "./Button.vue";
     import Link from "./Link.vue";
 
@@ -12,16 +11,13 @@
 
     const isMenuOpen = ref(false);
 
-    const themeStore = useThemeStore();
-    const theme = ref("light");
-
-    // onMounted(() => {
-    //     themeStore.loadTheme();
-    //     theme.value = themeStore.getTheme;
-    // });
-
     function toggleMenu() {
         isMenuOpen.value = !isMenuOpen.value;
+    }
+
+    function scrollToSection() {
+        const form = document.querySelector("#chat-form");
+        form.scrollIntoView({ behavior: "smooth" });
     }
 </script>
 
@@ -77,15 +73,12 @@
                 </ul>
             </nav>
             <div class="header__actions">
-                <!-- TODO: Implement Theme Switching -->
-                <!-- <button
+                <Button
                     type="button"
-                    class="header__toggle"
+                    @click.stop.prevent="scrollToSection()"
                 >
-                    <span>☀</span>
-                    <span>🌙</span>
-                </button> -->
-                <Button type="button"> Let's Chat </Button>
+                    Let's Chat
+                </Button>
             </div>
         </div>
     </header>

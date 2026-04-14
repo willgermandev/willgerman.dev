@@ -4,6 +4,11 @@
     import ParallaxCards from "@/components/ParallaxCards.vue";
     import Carousel from "@/components/Carousel.vue";
     import ContactForm from "@/components/ContactForm.vue";
+
+    function scrollToSection() {
+        const form = document.querySelector("#chat-form");
+        form.scrollIntoView({ behavior: "smooth" });
+    }
 </script>
 
 <template>
@@ -21,7 +26,11 @@
                     hic.
                 </p>
                 <div class="section__actions">
-                    <Button type="button">Let's Chat</Button>
+                    <Button
+                        type="button"
+                        @click.stop.prevent="scrollToSection()"
+                        >Let's Chat</Button
+                    >
                     <Link to="#none">Learn More</Link>
                 </div>
             </div>
@@ -61,7 +70,10 @@
             id="lets-chat"
             class="section"
         >
-            <div class="section__content wrapper">
+            <div
+                id="chat-form"
+                class="section__content wrapper"
+            >
                 <h2 class="heading w-max mx-auto">Lets Chat</h2>
                 <p class="description text-center">
                     Want to work together or have a question? Send me a message and I'll get back to
@@ -173,6 +185,8 @@
     }
 
     .section__content {
+        @apply scroll-mt-8 md:scroll-mt-16;
+
         & > :where(:not(:first-child)) {
             @apply mt-8;
         }
