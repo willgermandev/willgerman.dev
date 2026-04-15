@@ -4,10 +4,8 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
 
-import { REPO } from "@/config";
-
 export default defineConfig({
-    base: `/${REPO}/`,
+    base: `/willgerman.dev-dist/`, // NOTE: This should be the reponame for the distribution files, not the source code.
     plugins: [vue(), tailwindcss()],
     resolve: {
         alias: {
