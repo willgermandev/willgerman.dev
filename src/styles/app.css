@@ -62,3 +62,10 @@
         background-color: rgb(255 255 255 / 0.2);
     }
 }
+
+/* Body scroll lock applied by MenuSidebar.vue while the overlay drawer is
+   open. Lives in app.css (not a scoped SFC style) because the class is
+   toggled on <html>, which sits outside the component subtree. */
+.menu-sidebar-scroll-lock {
+    overflow: hidden;
+}
