@@ -25,6 +25,11 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 - `public/robots.txt` and `public/sitemap.xml` as tracked empty placeholders. Populate before any production deploy — an empty `sitemap.xml` is invalid XML and search engines reject it.
 - `.claude/launch.json` and `.claude/settings.json` for project-level Claude Code configuration (permissions allowlist, launch config). The local-override `settings.local.json` remains gitignored.
 - Empty placeholder directories scaffolded for `src/components/`, `src/services/`, `src/utilities/`, `src/assets/images/`, `src/assets/fonts/`. **Git does not track empty directories** — these will only persist across clones once the first tracked file lands inside each (or a `.gitkeep` is added).
+- `LICENSE` populated with the MIT License (Copyright 2026 William S. German). The file was previously tracked but empty.
+- `src/components/MenuButton.vue` — empty baseline SFC scaffolded per [docs/CODING_STANDARDS.md §5](docs/CODING_STANDARDS.md).
+- `src/components/Modal.vue` — thin wrapper around the native `<dialog>` element exposing `open()` and `close(returnValue)` via `defineExpose`, and re-emitting the native `close` and `cancel` events.
+- `src/components/ProjectCard.vue` — empty baseline SFC scaffolded per [docs/CODING_STANDARDS.md §5](docs/CODING_STANDARDS.md).
+- `src/views/SettingsView.vue` — empty baseline SFC. **Not yet wired into the route table.**
 
 ### Changed
 
@@ -32,5 +37,10 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 - Reformatted scaffolded `src/` files (`App.vue`, `__tests__/App.spec.js`, `main.js`, `router/index.js`, `stores/counter.js`) per the project's Prettier configuration (4-space indent, double quotes, semicolons, single attribute per line).
 - `src/main.js` now imports `./styles/app.css` on the first line so the Tailwind v4 stylesheet is wired into the app entry.
 - `index.html` set to `lang="en"` with `<title>Vue Template</title>` (replacing the scaffolded `lang=""` and placeholder `<title>Vite App</title>`); reformatted to Prettier conventions.
+- `README.md` project title updated from `Vue Template` to `willgerman.dev`.
+
+### Removed
+
+- `src/components/.gitkeep` — no longer needed now that tracked SFCs live in `src/components/`.
 
 [Unreleased]: https://github.com/willgermandev/vue-template/compare/HEAD...HEAD
