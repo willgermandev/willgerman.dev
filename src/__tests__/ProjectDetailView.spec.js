@@ -11,7 +11,7 @@ function makeTestRouter(initialPath) {
         routes: [
             {
                 path: "/projects",
-                name: "projects",
+                name: "project-list",
                 component: { template: "<div />" },
             },
             {
