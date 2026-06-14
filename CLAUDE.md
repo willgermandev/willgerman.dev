@@ -17,6 +17,10 @@ Project-wide conventions are codified in [docs/](docs/). Read the relevant doc b
 | API integration patterns (when a backend lands)        | [docs/BACKEND.md](docs/BACKEND.md)                   |
 | Contribution workflow & changelog                      | [CONTRIBUTING.md](CONTRIBUTING.md)                   |
 
+## Active feature plans
+
+Per-feature implementation plans for the willgerman.dev portfolio's first round live in [docs/feature-plans/](docs/feature-plans/). The index at [docs/feature-plans/\_index.md](docs/feature-plans/_index.md) tracks the build order, cross-cutting decisions, and links to every per-feature plan. All flagged decisions are resolved (2026-06-14); the plans are binding for their implementing PRs. Read the index before starting any implementation work in this round.
+
 ## Commands
 
 - `npm run dev` — Vite dev server with HMR.
@@ -34,7 +38,7 @@ Node engines: `^20.19.0 || >=22.12.0` (enforced via `package.json#engines`).
 Vue 3 + Vite SPA scaffolded from the official `create-vue` template, kept intentionally minimal as a starting point.
 
 - **Entry**: [index.html](index.html) (now `lang="en"` and `<title>Vue Template</title>`) mounts [src/main.js](src/main.js), which imports `./styles/app.css` and then composes the app with Pinia and Vue Router before mounting `#app`. Any global plugin (i18n, error reporter, etc.) belongs in `main.js`.
-- **Routing**: [src/router/index.js](src/router/index.js) uses `createWebHistory(import.meta.env.BASE_URL)` with an **empty `routes` array**. Four scaffolded views exist under [src/views/](src/views/) (`HomeView.vue`, `ProjectListView.vue`, `ProjectDetailView.vue`, `StyleGuideView.vue`) but none are wired — every URL currently renders the empty `App.vue`. Wiring them is the obvious next step.
+- **Routing**: [src/router/index.js](src/router/index.js) uses `createWebHistory(import.meta.env.BASE_URL)` with an **empty `routes` array**. Five scaffolded views exist under [src/views/](src/views/) (`HomeView.vue`, `ProjectListView.vue`, `ProjectDetailView.vue`, `SettingsView.vue`, `StyleGuideView.vue`) but none are wired — every URL currently renders the empty `App.vue`. Wiring them is the obvious next step; the per-feature plans under [docs/feature-plans/](docs/feature-plans/) cover Home, Settings, ProjectList, and ProjectDetail (StyleGuide is not yet planned).
 - **State**: Pinia stores live in `src/stores/` and use the **setup-style** `defineStore(id, () => { ... })` pattern (see [src/stores/counter.js](src/stores/counter.js)), not options style.
 - **Styling**: Tailwind CSS v4 via the `@tailwindcss/vite` plugin ([vite.config.js](vite.config.js)). No `tailwind.config.js` — v4 configures tokens inside CSS via `@theme`. [src/styles/app.css](src/styles/app.css) currently has `@import "tailwindcss"` + `@plugin "@tailwindcss/typography"` and **no `@theme` block yet** — declare project tokens there per [docs/DESIGN.md §1](docs/DESIGN.md). The VS Code workspace treats `*.css` as `tailwindcss` for IntelliSense.
 - **Tests**: Vitest with `jsdom` and `@vue/test-utils`. Tests colocate under `src/__tests__/` and use `*.spec.js`. Config in [vitest.config.js](vitest.config.js) merges the Vite config so the `@` alias works inside tests.
@@ -51,16 +55,16 @@ src/
     App.vue, main.js
     router/index.js                # empty route table — see Architecture
     stores/counter.js              # Pinia setup-style example
-    views/                         # 4 scaffolded SFCs, not yet routed
-    components/                    # EMPTY placeholder
+    views/                         # 5 scaffolded SFCs, not yet routed
+    components/                    # MenuButton.vue, Modal.vue, ProjectCard.vue (baseline SFCs)
     services/                      # EMPTY placeholder — API clients, non-reactive logic
     utilities/                     # EMPTY placeholder — pure stateless helpers
     styles/app.css                 # tailwindcss + typography plugin; no @theme yet
-    assets/images/, assets/fonts/  # EMPTY placeholders
+    assets/images/, assets/fonts/  # EMPTY placeholders (directories tracked but contents are empty)
     __tests__/App.spec.js
 ```
 
-⚠️ **Git does not track empty directories.** The empty placeholders above (`components/`, `services/`, `utilities/`, `assets/images/`, `assets/fonts/`) will not appear on a fresh clone until the first tracked file lands in each — drop a `.gitkeep` if persisting the scaffold matters. The same is true for [public/robots.txt](public/robots.txt) and [public/sitemap.xml](public/sitemap.xml) which are tracked but **empty** — populate before deploy (empty `sitemap.xml` is invalid XML and search engines reject it).
+⚠️ **Git does not track empty directories.** The remaining empty placeholders above (`services/`, `utilities/`, `assets/images/`, `assets/fonts/`) will not appear on a fresh clone until the first tracked file lands in each — drop a `.gitkeep` if persisting the scaffold matters. The same is true for [public/robots.txt](public/robots.txt) and [public/sitemap.xml](public/sitemap.xml) which are tracked but **empty** — populate before deploy (empty `sitemap.xml` is invalid XML and search engines reject it).
 
 ## Conventions
 

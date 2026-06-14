@@ -71,8 +71,12 @@ src/
         HomeView.vue
         ProjectListView.vue
         ProjectDetailView.vue
+        SettingsView.vue
         StyleGuideView.vue
-    components/              # shared components — EMPTY
+    components/              # shared components — baseline SFCs scaffolded
+        MenuButton.vue
+        Modal.vue
+        ProjectCard.vue
     services/                # API clients / non-reactive business logic — EMPTY
     utilities/               # pure stateless helpers (formatters, validators) — EMPTY
     composables/             # reactive Vue logic — not yet created; add when first composable lands
@@ -85,7 +89,7 @@ src/
         App.spec.js
 ```
 
-⚠️ **Git does not track empty directories.** Without a tracked file inside, `components/`, `services/`, `utilities/`, `assets/images/`, and `assets/fonts/` will not appear on a fresh clone — the scaffold shape only persists for contributors who clone *after* the first real file lands in each. If you want the structure to be discoverable on day one, drop a `.gitkeep` (or any tracked placeholder) into each empty directory, or accept that the first real file is what makes the directory exist in git.
+⚠️ **Git does not track empty directories.** Without a tracked file inside, `services/`, `utilities/`, `assets/images/`, and `assets/fonts/` will not appear on a fresh clone — the scaffold shape only persists for contributors who clone *after* the first real file lands in each. If you want the structure to be discoverable on day one, drop a `.gitkeep` (or any tracked placeholder) into each empty directory, or accept that the first real file is what makes the directory exist in git.
 
 Promote a folder when the second file of its kind lands; an empty placeholder is a hint about intent, not a hard rule.
 
