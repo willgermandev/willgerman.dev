@@ -30,10 +30,14 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 - `src/components/Modal.vue` — thin wrapper around the native `<dialog>` element exposing `open()` and `close(returnValue)` via `defineExpose`, and re-emitting the native `close` and `cancel` events.
 - `src/components/ProjectCard.vue` — empty baseline SFC scaffolded per [docs/CODING_STANDARDS.md §5](docs/CODING_STANDARDS.md).
 - `src/views/SettingsView.vue` — empty baseline SFC. **Not yet wired into the route table.**
+- `docs/feature-plans/` — per-feature implementation plans for the willgerman.dev portfolio's first round, generated via the `/plan-project` skill. Includes eight per-feature plans (`typography-foundation.md`, `menu-button.md`, `menu-sidebar.md`, `main-menu-view.md`, `settings-view.md`, `project-card.md`, `project-list-view.md`, `project-detail-view.md`) and an `_index.md` covering the build order, cross-cutting decisions (design tokens & glass surface, route table coordination, missing `SettingsView.vue`, `window.close()` behaviour, shared project records, page landmark posture), and the project-level decision log. All "Flagged for human review" items resolved (2026-06-14); plans are marked `ready-to-implement`.
 
 ### Changed
 
 - `README.md` restructured around a project title, overview pointing at `docs/`, authors, and project-setup section (install / develop / test / build / format) with sub-sections for recommended IDE and browser setup.
+- `CLAUDE.md` updated to reflect the actual `src/views/` (now five SFCs including `SettingsView.vue`) and `src/components/` (now contains the baseline `MenuButton.vue`, `Modal.vue`, `ProjectCard.vue`) instead of the original four-views / empty-components scaffold; added an "Active feature plans" section pointing at [docs/feature-plans/](docs/feature-plans/).
+- `docs/CODING_STANDARDS.md` §3 source-tree shape updated to list the five views and the three baseline components; removed `components/` from the empty-directory warning.
+- `docs/FRONTEND.md` §6 "Where components live" and §15 "Known gaps / TBDs" updated to reflect the five views and the baseline-scaffolded `src/components/`.
 - Reformatted scaffolded `src/` files (`App.vue`, `__tests__/App.spec.js`, `main.js`, `router/index.js`, `stores/counter.js`) per the project's Prettier configuration (4-space indent, double quotes, semicolons, single attribute per line).
 - `src/main.js` now imports `./styles/app.css` on the first line so the Tailwind v4 stylesheet is wired into the app entry.
 - `index.html` set to `lang="en"` with `<title>Vue Template</title>` (replacing the scaffolded `lang=""` and placeholder `<title>Vite App</title>`); reformatted to Prettier conventions.

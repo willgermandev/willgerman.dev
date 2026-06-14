@@ -215,11 +215,9 @@ See [CODING_STANDARDS.md §5](CODING_STANDARDS.md) for the full SFC conventions 
 
 The template pre-creates the following directories:
 
-- **[src/views/](../src/views/)** — routed pages. Ships scaffolded with four empty SFCs that follow the baseline template from [CODING_STANDARDS.md §5](CODING_STANDARDS.md): `HomeView.vue`, `ProjectListView.vue`, `ProjectDetailView.vue`, `StyleGuideView.vue`. **None are yet wired into `router/index.js`** — adding them to the route table is the next step (see §8).
-- **[src/components/](../src/components/)** — shared components used across routes (`AppButton.vue`, `AppInput.vue`, generic cards). **Currently empty** — add components here as soon as they're shared by two views.
+- **[src/views/](../src/views/)** — routed pages. Ships scaffolded with five empty SFCs that follow the baseline template from [CODING_STANDARDS.md §5](CODING_STANDARDS.md): `HomeView.vue`, `ProjectListView.vue`, `ProjectDetailView.vue`, `SettingsView.vue`, `StyleGuideView.vue`. **None are yet wired into `router/index.js`** — adding them to the route table is the next step (see §8). Per-feature implementation plans for the first four live under [docs/feature-plans/](../docs/feature-plans/).
+- **[src/components/](../src/components/)** — shared components used across routes. Currently contains baseline-scaffolded SFCs (`MenuButton.vue`, `Modal.vue`, `ProjectCard.vue`) whose implementations will be filled in per their plans under [docs/feature-plans/](../docs/feature-plans/). Add new components here as soon as they're shared by two views.
 - **`src/components/<feature>/`** — feature-scoped clusters (`src/components/cart/CartDrawer.vue`). Promote a feature subdirectory when the second related component lands.
-
-`src/components/` is empty and git won't track it across clones until a file lands inside — see [CODING_STANDARDS.md §3](CODING_STANDARDS.md) for the `.gitkeep` note.
 
 ### Single-attribute-per-line in templates
 
@@ -461,8 +459,8 @@ When kicking off a new frontend task, the brief should answer all six. If any is
 
 This template ships intentionally bare. The list below is what to wire as soon as a real project demands it — each is a deliberate "decide later" rather than an oversight.
 
-- **Route table is empty.** [router/index.js](../src/router/index.js) has `routes: []` even though four scaffolded views exist under [src/views/](../src/views/). Wire them up (`HomeView` → `/`, `ProjectListView` → `/projects`, `ProjectDetailView` → `/projects/:slug`, `StyleGuideView` → `/style-guide`) — names are kebab-case (see §8). Until then, every URL renders the empty `App.vue`.
-- **Empty placeholder directories** — [src/components/](../src/components/), [src/services/](../src/services/), [src/utilities/](../src/utilities/), [src/assets/images/](../src/assets/images/), [src/assets/fonts/](../src/assets/fonts/) are pre-created but empty. They won't survive a fresh clone unless tracked content (e.g. `.gitkeep`) lands inside — see [CODING_STANDARDS.md §3](CODING_STANDARDS.md).
+- **Route table is empty.** [router/index.js](../src/router/index.js) has `routes: []` even though five scaffolded views exist under [src/views/](../src/views/). Wire them up (`HomeView` → `/`, `ProjectListView` → `/projects`, `ProjectDetailView` → `/projects/:slug`, `SettingsView` → `/settings`, `StyleGuideView` → `/style-guide`) — names are kebab-case (see §8). The first four routes have per-feature plans under [docs/feature-plans/](../docs/feature-plans/) covering registration order; `StyleGuideView` is not yet planned. Until then, every URL renders the empty `App.vue`.
+- **Empty placeholder directories** — [src/services/](../src/services/), [src/utilities/](../src/utilities/), [src/assets/images/](../src/assets/images/), [src/assets/fonts/](../src/assets/fonts/) are pre-created but empty. They won't survive a fresh clone unless tracked content (e.g. `.gitkeep`) lands inside — see [CODING_STANDARDS.md §3](CODING_STANDARDS.md). [src/components/](../src/components/) now contains baseline-scaffolded SFCs and no longer needs `.gitkeep`.
 - **Empty `public/` files** — [public/robots.txt](../public/robots.txt) and [public/sitemap.xml](../public/sitemap.xml) are empty placeholders. `robots.txt` is harmless empty (parses as "allow all"); `sitemap.xml` is invalid empty and must be populated before deploy (see §11).
 - **`src/styles/app.css` has no `@theme` block yet** — the file ships with `@import "tailwindcss"` and `@plugin "@tailwindcss/typography"` but no design tokens. See [DESIGN.md §1](DESIGN.md) for the prescribed shape.
 - **Vue devtools plugin** — `vite-plugin-vue-devtools` is in `devDependencies` but **not yet wired into [vite.config.js](../vite.config.js)**. Add `import VueDevtools from "vite-plugin-vue-devtools"; plugins: [vue(), tailwindcss(), VueDevtools()]` to enable.
