@@ -1,4 +1,4 @@
-# Vue Template
+# willgerman.dev
 
 ## Overview
 
