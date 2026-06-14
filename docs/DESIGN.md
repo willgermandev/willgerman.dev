@@ -1,6 +1,6 @@
 # DESIGN
 
-Design tokens for projects built on this template. **No tokens are defined yet** — the scaffold ships with Tailwind v4 defaults. This file is the **prescriptive starting point** for the first real project: where tokens live, how to extend them, and the conventions that keep the system coherent.
+Design tokens for projects built on this template. The first round of tokens has landed (typography + base colors); this file is the **prescriptive source of truth** for the willgerman.dev portfolio: where tokens live, what's declared today, how to extend them, and the conventions that keep the system coherent.
 
 For build pipeline / Tailwind v4 wiring see [FRONTEND.md §4](FRONTEND.md). For project-wide code style see [CODING_STANDARDS.md](CODING_STANDARDS.md).
 
@@ -8,19 +8,36 @@ For build pipeline / Tailwind v4 wiring see [FRONTEND.md §4](FRONTEND.md). For 
 
 ## 1. Where tokens live
 
-Tailwind v4 declares tokens **inside CSS** via `@theme` — there is no `tailwind.config.js`. The single source of truth is [src/styles/app.css](../src/styles/app.css), which ships with the import and the typography plugin wired in but no tokens declared yet:
+Tailwind v4 declares tokens **inside CSS** via `@theme` — there is no `tailwind.config.js`. The single source of truth is [src/styles/app.css](../src/styles/app.css), which carries the `tailwindcss` import, the typography plugin, the project's `@font-face` rules, and a single `@theme` block. The `@theme` block currently declares four tokens — `--font-sans` and `--font-condensed` (see [§3 Typography](#3-typography)) and `--color-background` and `--color-foreground` (see [§2 Color](#2-color)) — each of which Tailwind v4 turns into utility classes automatically:
+
+| Declared token       | Generated utilities                                                 |
+| -------------------- | ------------------------------------------------------------------- |
+| `--font-sans`        | `font-sans`                                                         |
+| `--font-condensed`   | `font-condensed`                                                    |
+| `--color-background` | `bg-background`, `text-background`, `border-background`             |
+| `--color-foreground` | `bg-foreground`, `text-foreground`, `border-foreground`             |
+
+The shape of the file:
 
 ```css
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* @font-face rules for Barlow / Barlow Condensed — see §3. */
+
 @theme {
-    /* Tokens go here — none declared yet. Every variable below becomes a utility class:
-       --color-primary    → bg-primary, text-primary, border-primary
-       --font-heading     → font-heading
-       --spacing-section  → mb-section, py-section
-       --radius-card      → rounded-card
-    */
+    --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+    --font-condensed: "Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif;
+    --color-background: oklch(0% 0 0);
+    --color-foreground: oklch(100% 0 0);
+}
+
+@layer base {
+    body {
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        font-family: var(--font-sans);
+    }
 }
 ```
 
@@ -33,11 +50,26 @@ Rules:
 - **Variant overrides** (dark mode, brand themes) come from extra `@theme` or `@layer base` blocks with selector scope (`@media (prefers-color-scheme: dark) { … }`, `[data-theme="brand-x"] { … }`).
 - **Load additional plugins via `@plugin "<package-name>"`** in this same file, after `@import "tailwindcss"`. Each one needs the corresponding npm package installed; keep `@plugin` directives and `devDependencies` in sync.
 
-When this file says "the project ships with X token," it means the first real project should declare X in `@theme`. The template ships with the `tailwindcss` import + the typography plugin and **no tokens declared yet** — every token example below is a recommendation, not a current value.
+When this file says "the project ships with X token," it means a current declaration in `@theme` — listed in the "Currently declared" subsections under §§2–3. Anything else in this file is a recommendation, not a current value.
 
 ---
 
 ## 2. Color
+
+### Currently declared
+
+The portfolio runs a **dark-only** palette declared in [src/styles/app.css](../src/styles/app.css):
+
+| Token                | Value             | Generated utilities                                         |
+| -------------------- | ----------------- | ----------------------------------------------------------- |
+| `--color-background` | `oklch(0% 0 0)`   | `bg-background`, `text-background`, `border-background`     |
+| `--color-foreground` | `oklch(100% 0 0)` | `bg-foreground`, `text-foreground`, `border-foreground`     |
+
+Notes:
+
+- The body default (`@layer base`) paints `bg-background` + `text-foreground`, so a downstream component opts in to inverse pairings (`bg-foreground text-background`) only when needed.
+- No `*-content` pair is declared. With a single foreground color, the pair is redundant — `--color-foreground` *is* the content color on every surface that uses `--color-background`. If a second surface color lands, declare it with its `*-content` partner per the [Functional pairings](#functional-pairings) table below.
+- The OKLCH recommendation in this section is honored at the endpoints: `oklch(0% 0 0)` ≡ `#000000` and `oklch(100% 0 0)` ≡ `#ffffff`. The OKLCH triplet documents intent (lightness / chroma / hue) and keeps the token contract uniform when intermediate gray surface tokens land later.
 
 ### Recommended starting palette
 
@@ -113,6 +145,22 @@ The template ships with **no dark mode wired**. Decide deliberately when adoptin
 ---
 
 ## 3. Typography
+
+### Currently declared
+
+The portfolio declares two families, self-hosted as Latin-subset `.woff2` files under [src/assets/fonts/](../src/assets/fonts/):
+
+| Token              | Value                                                                       | Files                                                                                         | Generated utility |
+| ------------------ | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------- |
+| `--font-sans`      | `"Barlow", ui-sans-serif, system-ui, sans-serif`                            | `barlow-light.woff2` (300), `barlow-regular.woff2` (400)                                      | `font-sans`       |
+| `--font-condensed` | `"Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif`        | `barlow-condensed-black.woff2` (900)                                                          | `font-condensed`  |
+
+Notes:
+
+- The body default (`@layer base`) sets `font-family: var(--font-sans)`, so every page renders in Barlow without an explicit `font-sans` class.
+- Barlow ships at two weights (Light 300, Regular 400); Barlow Condensed ships at one (Black 900). Asking for an unshipped weight (e.g. `font-bold` on `font-condensed`) gets the browser's synthesized bold — acceptable for body Barlow, but on the single-weight display face it tends to look uneven. Stick to the shipped weights.
+- All three `@font-face` rules declare `font-display: swap` — text renders in the fallback (`ui-sans-serif` / `system-ui`) immediately and re-renders in Barlow once the file loads. Avoids FOIT per [ACCESSIBILITY.md](ACCESSIBILITY.md).
+- License: SIL Open Font License 1.1, full text at [src/assets/fonts/OFL.txt](../src/assets/fonts/OFL.txt). Same license covers both families.
 
 ### Recommended families
 

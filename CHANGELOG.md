@@ -31,6 +31,11 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 - `src/components/ProjectCard.vue` — empty baseline SFC scaffolded per [docs/CODING_STANDARDS.md §5](docs/CODING_STANDARDS.md).
 - `src/views/SettingsView.vue` — empty baseline SFC. **Not yet wired into the route table.**
 - `docs/feature-plans/` — per-feature implementation plans for the willgerman.dev portfolio's first round, generated via the `/plan-project` skill. Includes eight per-feature plans (`typography-foundation.md`, `menu-button.md`, `menu-sidebar.md`, `main-menu-view.md`, `settings-view.md`, `project-card.md`, `project-list-view.md`, `project-detail-view.md`) and an `_index.md` covering the build order, cross-cutting decisions (design tokens & glass surface, route table coordination, missing `SettingsView.vue`, `window.close()` behaviour, shared project records, page landmark posture), and the project-level decision log. All "Flagged for human review" items resolved (2026-06-14); plans are marked `ready-to-implement`.
+- `src/assets/fonts/barlow-light.woff2`, `barlow-regular.woff2`, `barlow-condensed-black.woff2` — three self-hosted Latin-subset Barlow weights (Light 300, Regular 400) and Barlow Condensed Black 900, ~66 KB combined, sourced from fonts.google.com under SIL Open Font License 1.1.
+- `src/assets/fonts/OFL.txt` — bundled SIL Open Font License 1.1 covering both Barlow and Barlow Condensed.
+- `src/styles/app.css` `@font-face` rules for the three Barlow weights, all using `font-display: swap` to avoid FOIT.
+- `src/styles/app.css` first `@theme` block declaring four tokens: `--font-sans` (Barlow stack), `--font-condensed` (Barlow Condensed stack), `--color-background` (`oklch(0% 0 0)`), `--color-foreground` (`oklch(100% 0 0)`). These generate the `font-sans`, `font-condensed`, `bg-background`/`text-background`/`border-background`, and `bg-foreground`/`text-foreground`/`border-foreground` utilities downstream features consume.
+- `src/styles/app.css` `@layer base` body default — paints the document `bg-background` + `text-foreground` and sets `font-family: var(--font-sans)` so every page renders dark-on-light-text in Barlow without explicit utilities.
 
 ### Changed
 
@@ -38,6 +43,8 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 - `CLAUDE.md` updated to reflect the actual `src/views/` (now five SFCs including `SettingsView.vue`) and `src/components/` (now contains the baseline `MenuButton.vue`, `Modal.vue`, `ProjectCard.vue`) instead of the original four-views / empty-components scaffold; added an "Active feature plans" section pointing at [docs/feature-plans/](docs/feature-plans/).
 - `docs/CODING_STANDARDS.md` §3 source-tree shape updated to list the five views and the three baseline components; removed `components/` from the empty-directory warning.
 - `docs/FRONTEND.md` §6 "Where components live" and §15 "Known gaps / TBDs" updated to reflect the five views and the baseline-scaffolded `src/components/`.
+- `docs/DESIGN.md` §1 "Where tokens live", §2 "Color", and §3 "Typography" updated with "Currently declared" subsections naming the four tokens this round ships (`--font-sans`, `--font-condensed`, `--color-background`, `--color-foreground`), the generated utilities, the font weights / file locations, and the OFL license posture. The "no tokens declared yet" framing is gone.
+- `CLAUDE.md` "Architecture > Styling" line updated to describe the now-declared `@theme` block and `@font-face` rules instead of the stale "no `@theme` block yet" framing. Source-structure block updated to reflect `src/assets/fonts/` now carrying tracked font files + `OFL.txt`.
 - Reformatted scaffolded `src/` files (`App.vue`, `__tests__/App.spec.js`, `main.js`, `router/index.js`, `stores/counter.js`) per the project's Prettier configuration (4-space indent, double quotes, semicolons, single attribute per line).
 - `src/main.js` now imports `./styles/app.css` on the first line so the Tailwind v4 stylesheet is wired into the app entry.
 - `index.html` set to `lang="en"` with `<title>Vue Template</title>` (replacing the scaffolded `lang=""` and placeholder `<title>Vite App</title>`); reformatted to Prettier conventions.
@@ -46,5 +53,6 @@ The format is based on [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.
 ### Removed
 
 - `src/components/.gitkeep` — no longer needed now that tracked SFCs live in `src/components/`.
+- `src/assets/fonts/.gitkeep` — superseded by the tracked `.woff2` files and `OFL.txt` that now anchor the directory.
 
 [Unreleased]: https://github.com/willgermandev/vue-template/compare/HEAD...HEAD
