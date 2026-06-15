@@ -47,3 +47,25 @@
         font-family: var(--font-sans);
     }
 }
+
+/* Shared glassmorphic surface — translucent white with backdrop blur.
+   Owned by feature/menu-button (first consumer); reused by settings-view.
+   Declared with `@utility` (Tailwind v4) so consumers can `@apply glass-surface`
+   in SFC scoped styles. Falls back to a solid translucent white when
+   `backdrop-filter` is unsupported. */
+@utility glass-surface {
+    background-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    @supports not (backdrop-filter: blur(8px)) {
+        background-color: rgb(255 255 255 / 0.2);
+    }
+}
+
+/* Body scroll lock applied by MenuSidebar.vue while the overlay drawer is
+   open. Lives in app.css (not a scoped SFC style) because the class is
+   toggled on <html>, which sits outside the component subtree. */
+.menu-sidebar-scroll-lock {
+    overflow: hidden;
+}
