@@ -1,2 +1,49 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* Self-hosted Barlow family — Latin subset, .woff2 only.
+   Sourced from fonts.google.com under SIL Open Font License 1.1.
+   Full license: src/assets/fonts/OFL.txt. See docs/DESIGN.md §3. */
+@font-face {
+    font-family: "Barlow";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url("../assets/fonts/barlow-light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Barlow";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../assets/fonts/barlow-regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Barlow Condensed";
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url("../assets/fonts/barlow-condensed-black.woff2") format("woff2");
+}
+
+@theme {
+    /* Typography — Barlow body, Barlow Condensed display.
+       Generates utilities: font-sans, font-condensed. */
+    --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+    --font-condensed: "Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif;
+
+    /* Base colors — dark-only palette.
+       Generates utilities: bg-background, text-background, bg-foreground, text-foreground, border-foreground, etc. */
+    --color-background: oklch(0% 0 0);
+    --color-foreground: oklch(100% 0 0);
+}
+
+@layer base {
+    body {
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        font-family: var(--font-sans);
+    }
+}

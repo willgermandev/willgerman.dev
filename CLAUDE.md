@@ -40,7 +40,7 @@ Vue 3 + Vite SPA scaffolded from the official `create-vue` template, kept intent
 - **Entry**: [index.html](index.html) (now `lang="en"` and `<title>Vue Template</title>`) mounts [src/main.js](src/main.js), which imports `./styles/app.css` and then composes the app with Pinia and Vue Router before mounting `#app`. Any global plugin (i18n, error reporter, etc.) belongs in `main.js`.
 - **Routing**: [src/router/index.js](src/router/index.js) uses `createWebHistory(import.meta.env.BASE_URL)` with an **empty `routes` array**. Five scaffolded views exist under [src/views/](src/views/) (`HomeView.vue`, `ProjectListView.vue`, `ProjectDetailView.vue`, `SettingsView.vue`, `StyleGuideView.vue`) but none are wired — every URL currently renders the empty `App.vue`. Wiring them is the obvious next step; the per-feature plans under [docs/feature-plans/](docs/feature-plans/) cover Home, Settings, ProjectList, and ProjectDetail (StyleGuide is not yet planned).
 - **State**: Pinia stores live in `src/stores/` and use the **setup-style** `defineStore(id, () => { ... })` pattern (see [src/stores/counter.js](src/stores/counter.js)), not options style.
-- **Styling**: Tailwind CSS v4 via the `@tailwindcss/vite` plugin ([vite.config.js](vite.config.js)). No `tailwind.config.js` — v4 configures tokens inside CSS via `@theme`. [src/styles/app.css](src/styles/app.css) currently has `@import "tailwindcss"` + `@plugin "@tailwindcss/typography"` and **no `@theme` block yet** — declare project tokens there per [docs/DESIGN.md §1](docs/DESIGN.md). The VS Code workspace treats `*.css` as `tailwindcss` for IntelliSense.
+- **Styling**: Tailwind CSS v4 via the `@tailwindcss/vite` plugin ([vite.config.js](vite.config.js)). No `tailwind.config.js` — v4 configures tokens inside CSS via `@theme`. [src/styles/app.css](src/styles/app.css) loads `tailwindcss` + the typography plugin, declares `@font-face` rules for self-hosted Barlow / Barlow Condensed under [src/assets/fonts/](src/assets/fonts/), and an `@theme` block declares `--font-sans` (Barlow), `--font-condensed` (Barlow Condensed), `--color-background`, and `--color-foreground`; see [docs/DESIGN.md](docs/DESIGN.md) for the canonical token list. The VS Code workspace treats `*.css` as `tailwindcss` for IntelliSense.
 - **Tests**: Vitest with `jsdom` and `@vue/test-utils`. Tests colocate under `src/__tests__/` and use `*.spec.js`. Config in [vitest.config.js](vitest.config.js) merges the Vite config so the `@` alias works inside tests.
 
 ### Path aliases & imports
@@ -59,12 +59,13 @@ src/
     components/                    # MenuButton.vue, Modal.vue, ProjectCard.vue (baseline SFCs)
     services/                      # EMPTY placeholder — API clients, non-reactive logic
     utilities/                     # EMPTY placeholder — pure stateless helpers
-    styles/app.css                 # tailwindcss + typography plugin; no @theme yet
-    assets/images/, assets/fonts/  # EMPTY placeholders (directories tracked but contents are empty)
+    styles/app.css                 # tailwindcss + typography plugin + @font-face + @theme (font + base color tokens)
+    assets/fonts/                  # self-hosted Barlow + Barlow Condensed .woff2 files + OFL.txt
+    assets/images/                 # EMPTY placeholder
     __tests__/App.spec.js
 ```
 
-⚠️ **Git does not track empty directories.** The remaining empty placeholders above (`services/`, `utilities/`, `assets/images/`, `assets/fonts/`) will not appear on a fresh clone until the first tracked file lands in each — drop a `.gitkeep` if persisting the scaffold matters. The same is true for [public/robots.txt](public/robots.txt) and [public/sitemap.xml](public/sitemap.xml) which are tracked but **empty** — populate before deploy (empty `sitemap.xml` is invalid XML and search engines reject it).
+⚠️ **Git does not track empty directories.** The remaining empty placeholders above (`services/`, `utilities/`, `assets/images/`) will not appear on a fresh clone until the first tracked file lands in each — drop a `.gitkeep` if persisting the scaffold matters. The same is true for [public/robots.txt](public/robots.txt) and [public/sitemap.xml](public/sitemap.xml) which are tracked but **empty** — populate before deploy (empty `sitemap.xml` is invalid XML and search engines reject it).
 
 ## Conventions
 
